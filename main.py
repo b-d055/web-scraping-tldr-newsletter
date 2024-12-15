@@ -92,6 +92,7 @@ def send_html_message(html):
 			"html": html})
 
 def get_article_summary(comments, article_title):
+	# Prompt definitely could be improved
 	chat_completion = client.chat.completions.create(
 		messages=[
 			{
@@ -126,8 +127,8 @@ def get_google_snapshot(snapshot_id, folder_name="data"):
 	return get_snapshot(snapshot_id)
 
 def format_article_to_html(articles):
-	# get html template from template.html
 	html_template = open('template.html', 'r').read()
+	# that are more elegant ways to do this, but this works
 	chat_completion = client.chat.completions.create(
 		messages=[
 			{
@@ -182,7 +183,8 @@ def get_newsletter(subreddit="news"):
 	combined_results = []
 	for post in reddit_posts:
 		articles = list(filter(lambda x: x.get('keyword') == post.get('title'), google_snapshot_result))
-		last_week = datetime.now() - timedelta(days=7)
+		# we only want fresh articles
+		last_week = datetime.now() - timedelta(days=3)
 		articles = list(filter(lambda x: x.get('date') >= last_week.isoformat(), articles))
 		media_links = [article.get('url') for article in articles]
 		media_links.insert(0, post.get('url'))
@@ -209,12 +211,11 @@ def get_technews_newsletter():
 	get_newsletter("technews")
 
 if __name__ == "__main__":
-	get_technews_newsletter()
-	# schedule.every().day.at("8:30").do(get_technews_newsletter)
+	schedule.every().day.at("8:30").do(get_technews_newsletter)
 
-	# while True:
-	# 	schedule.run_pending()
-	# 	time.sleep(1)
+	while True:
+		schedule.run_pending()
+		time.sleep(1)
 
 
 
