@@ -2,7 +2,7 @@
 
 This project demonstrates how to use the Bright Data API to fetch articles from Reddit and Google News, summarize them using OpenAI, and send the results via email using Mailgun.
 
-Originally written for the [Bright Data Web Scraping Challenge](https://dev.to/t/brightdatachallenge)
+Originally written for the [Bright Data Web Scraping Challenge](https://dev.to/t/brightdatachallenge). My submission [here](https://dev.to/b-d055/using-bright-data-and-openai-to-auto-generate-tldr-style-newsletters-42cl).
 
 ## Prerequisites
 
